@@ -1,4 +1,4 @@
-// Explore Bangladesh — shared front-end behaviour
+// COMPASS — shared front-end behaviour
 // (Runs after js/layout.js has injected the header/footer.)
 
 function wireFavButtons(root = document) {
@@ -9,9 +9,9 @@ function wireFavButtons(root = document) {
       e.preventDefault();
       const destId = btn.dataset.destId;
       try {
-        const data = await apiPost('/api/toggle_favourite.php', { destination_id: destId });
+        const data = await apiPost('/explore-bangladesh-main/api/toggle_favourite.php', { destination_id: destId });
         if (data.status === 'login_required') {
-          window.location.href = '/login.php';
+          window.location.href = '/explore-bangladesh-main/login.php';
           return;
         }
         const icon = data.is_favourite ? '❤️' : '🤍';

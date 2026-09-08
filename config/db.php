@@ -1,7 +1,7 @@
 <?php
 /**
  * Database connection (PDO / MySQL)
- * Explore Bangladesh — Smart Tourism Management System
+ * COMPASS — Smart Tourism Management System
  */
 
 define('DB_HOST', '127.0.0.1');

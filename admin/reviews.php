@@ -38,9 +38,9 @@ include __DIR__ . '/includes/header.php';
 <?php if ($message): ?><div class="advice-box"><?= htmlspecialchars($message) ?></div><?php endif; ?>
 
 <div class="filter-bar">
-  <a href="/admin/reviews.php?filter=all" class="filter-chip <?= $filter === 'all' ? 'active' : '' ?>">All</a>
-  <a href="/admin/reviews.php?filter=pending" class="filter-chip <?= $filter === 'pending' ? 'active' : '' ?>">Pending</a>
-  <a href="/admin/reviews.php?filter=verified" class="filter-chip <?= $filter === 'verified' ? 'active' : '' ?>">Verified</a>
+  <a href="/explore-bangladesh-main/admin/reviews.php?filter=all" class="filter-chip <?= $filter === 'all' ? 'active' : '' ?>">All</a>
+  <a href="/explore-bangladesh-main/admin/reviews.php?filter=pending" class="filter-chip <?= $filter === 'pending' ? 'active' : '' ?>">Pending</a>
+  <a href="/explore-bangladesh-main/admin/reviews.php?filter=verified" class="filter-chip <?= $filter === 'verified' ? 'active' : '' ?>">Verified</a>
 </div>
 
 <?php if (empty($reviews)): ?>
@@ -58,11 +58,11 @@ include __DIR__ . '/includes/header.php';
       <td><?= $r['is_verified'] ? '✅ Verified' : '🕓 Pending' ?></td>
       <td>
         <?php if ($r['is_verified']): ?>
-          <a href="/admin/reviews.php?unverify=<?= $r['review_id'] ?>&filter=<?= $filter ?>" class="btn btn-ghost btn-sm">Unverify</a>
+          <a href="/explore-bangladesh-main/admin/reviews.php?unverify=<?= $r['review_id'] ?>&filter=<?= $filter ?>" class="btn btn-ghost btn-sm">Unverify</a>
         <?php else: ?>
-          <a href="/admin/reviews.php?verify=<?= $r['review_id'] ?>&filter=<?= $filter ?>" class="btn btn-forest btn-sm">Verify</a>
+          <a href="/explore-bangladesh-main/admin/reviews.php?verify=<?= $r['review_id'] ?>&filter=<?= $filter ?>" class="btn btn-forest btn-sm">Verify</a>
         <?php endif; ?>
-        <a href="/admin/reviews.php?delete=<?= $r['review_id'] ?>&filter=<?= $filter ?>" class="btn btn-ghost btn-sm" onclick="return confirm('Delete this review?')">Delete</a>
+        <a href="/explore-bangladesh-main/admin/reviews.php?delete=<?= $r['review_id'] ?>&filter=<?= $filter ?>" class="btn btn-ghost btn-sm" onclick="return confirm('Delete this review?')">Delete</a>
       </td>
     </tr>
   <?php endforeach; ?>

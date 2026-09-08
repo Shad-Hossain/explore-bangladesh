@@ -11,7 +11,7 @@ $districts = $pdo->query("SELECT * FROM districts ORDER BY district_name")->fetc
 // DELETE
 if (isset($_GET['delete'])) {
     $pdo->prepare("DELETE FROM destinations WHERE destination_id = ?")->execute([(int) $_GET['delete']]);
-    header('Location: /admin/destinations.php');
+    header('Location: /explore-bangladesh-main/admin/destinations.php');
     exit;
 }
 
@@ -112,7 +112,7 @@ include __DIR__ . '/includes/header.php';
         <label style="margin:0;">Outdoor / weather-sensitive spot</label>
       </div>
       <button type="submit" class="btn btn-primary btn-block"><?= $editRow ? 'Update destination' : 'Add destination' ?></button>
-      <?php if ($editRow): ?><a href="/admin/destinations.php" class="btn btn-ghost btn-block" style="margin-top:8px;">Cancel edit</a><?php endif; ?>
+      <?php if ($editRow): ?><a href="/explore-bangladesh-main/admin/destinations.php" class="btn btn-ghost btn-block" style="margin-top:8px;">Cancel edit</a><?php endif; ?>
     </form>
   </div>
 
@@ -127,8 +127,8 @@ include __DIR__ . '/includes/header.php';
           <td><?= htmlspecialchars($d['category_name']) ?></td>
           <td><?= htmlspecialchars($d['district_name']) ?></td>
           <td>
-            <a href="/admin/destinations.php?edit=<?= $d['destination_id'] ?>" class="btn btn-ghost btn-sm">Edit</a>
-            <a href="/admin/destinations.php?delete=<?= $d['destination_id'] ?>" class="btn btn-ghost btn-sm" onclick="return confirm('Delete this destination and all related data?')">Delete</a>
+            <a href="/explore-bangladesh-main/admin/destinations.php?edit=<?= $d['destination_id'] ?>" class="btn btn-ghost btn-sm">Edit</a>
+            <a href="/explore-bangladesh-main/admin/destinations.php?delete=<?= $d['destination_id'] ?>" class="btn btn-ghost btn-sm" onclick="return confirm('Delete this destination and all related data?')">Delete</a>
           </td>
         </tr>
       <?php endforeach; ?>

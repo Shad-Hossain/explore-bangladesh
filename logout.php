@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Logging out… — Explore Bangladesh</title>
-<link rel="stylesheet" href="/css/style.css">
+<title>Logging out… — COMPASS</title>
+
+<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
 </head>
 <body>
 <div class="container section"><p>Logging you out…</p></div>
-<script src="/js/api.js"></script>
+<script src="/explore-bangladesh-main/js/api.js"></script>
 <script>
-apiPost('/api/logout.php', {}).finally(() => {
-  window.location.href = '/index.php';
+apiPost('/explore-bangladesh-main/api/logout.php', {}).finally(() => {
+  window.location.href = '/explore-bangladesh-main/index.php';
 });
 </script>
 </body>

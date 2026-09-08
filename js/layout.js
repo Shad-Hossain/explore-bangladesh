@@ -5,17 +5,18 @@
  *
  * Every page just needs:
  *   <div id="site-header"></div>  ...content...  <div id="site-footer"></div>
- *   <script src="/js/api.js"></script>
- *   <script src="/js/layout.js"></script>
+ *   <script src="/explore-bangladesh-main/js/api.js"></script>
+ *   <script src="/explore-bangladesh-main/js/layout.js"></script>
  */
 
 async function loadLayout() {
   const headerSlot = document.getElementById('site-header');
   const footerSlot = document.getElementById('site-footer');
 
+  const v = '?v=3';
   const [headerHtml, footerHtml] = await Promise.all([
-    fetch('/includes/header.html').then(r => r.text()),
-    fetch('/includes/footer.html').then(r => r.text()),
+    fetch('/explore-bangladesh-main/includes/header.html' + v).then(r => r.text()),
+    fetch('/explore-bangladesh-main/includes/footer.html' + v).then(r => r.text()),
   ]);
 
   if (headerSlot) headerSlot.innerHTML = headerHtml;
@@ -30,7 +31,7 @@ async function loadLayout() {
 }
 
 function highlightActiveNav() {
-  const current = window.location.pathname.split('/').pop() || 'index.php';
+  const current = window.location.pathname.split('/explore-bangladesh-main/').pop() || 'index.php';
   document.querySelectorAll('#mainNav a[data-nav]').forEach(a => {
     if (a.dataset.nav === current) a.classList.add('active');
   });
@@ -74,7 +75,7 @@ function setFooterYear() {
   const el = document.getElementById('footerBottom');
   if (el) {
     const year = new Date().getFullYear();
-    el.innerHTML = `© ${year} Explore Bangladesh. Built with PHP, MySQL &amp; ❤ for Bangladesh tourism.`;
+    el.innerHTML = `© ${year} COMPASS. Built with PHP, MySQL &amp; ❤ for Bangladesh tourism.`;
   }
 }
 
@@ -84,7 +85,7 @@ async function paintAuthArea() {
 
   let session = { logged_in: false };
   try {
-    session = await apiGet('/api/session.php');
+    session = await apiGet('/explore-bangladesh-main/api/session.php');
   } catch (e) { /* treat as logged out */ }
 
   document.querySelectorAll('[data-auth-only]').forEach(el => {
@@ -97,13 +98,13 @@ async function paintAuthArea() {
       <a href="#" id="logoutLink" class="btn btn-ghost">Log out</a>`;
     document.getElementById('logoutLink').addEventListener('click', async (e) => {
       e.preventDefault();
-      await apiPost('/api/logout.php', {});
-      window.location.href = '/index.php';
+      await apiPost('/explore-bangladesh-main/api/logout.php', {});
+      window.location.href = '/explore-bangladesh-main/index.php';
     });
-  } else {
+  } else if (!slot.children.length) {
     slot.innerHTML = `
-      <a href="/login.php" class="btn btn-ghost">Log in</a>
-      <a href="/register.php" class="btn btn-primary">Sign up</a>`;
+      <a href="/explore-bangladesh-main/login.php" class="btn btn-ghost">Log in</a>
+      <a href="/explore-bangladesh-main/register.php" class="btn btn-primary">Sign up</a>`;
   }
 }
 

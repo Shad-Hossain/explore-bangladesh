@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitleTag">Explore Bangladesh</title>
+<title id="pageTitleTag">COMPASS</title>
 <script>
   (function () {
     try {
@@ -17,7 +17,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
 </head>
 <body>
 
@@ -29,10 +30,10 @@
 
 <div id="site-footer"></div>
 
-<script src="/js/util.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/layout.js"></script>
-<script src="/js/script.js"></script>
+<script src="/explore-bangladesh-main/js/util.js"></script>
+<script src="/explore-bangladesh-main/js/api.js"></script>
+<script src="/explore-bangladesh-main/js/layout.js"></script>
+<script src="/explore-bangladesh-main/js/script.js"></script>
 <script>
 const destId = qs('id');
 
@@ -47,7 +48,7 @@ function renderNotFound() {
 
 function renderPage(data) {
   const d = data.destination;
-  document.title = d.name + ' — Explore Bangladesh';
+  document.title = d.name + ' — COMPASS';
 
   const forecastHtml = data.forecast.length
     ? `<div class="forecast-strip">${data.forecast.map(day => `
@@ -72,7 +73,7 @@ function renderPage(data) {
           <td>${escapeHtml(r.origin)}${r.stop_over ? ' → ' + escapeHtml(r.stop_over) : ''}</td>
           <td>${escapeHtml(r.estimated_time)}</td>
           <td>${money(r.estimated_cost)}</td>
-          <td><a href="/ticket_booking.php?route=${r.route_id}" class="btn btn-primary btn-sm">Book</a></td>
+          <td><a href="/explore-bangladesh-main/ticket_booking.php?route=${r.route_id}" class="btn btn-primary btn-sm">Book</a></td>
         </tr>`).join('')}</tbody>
     </table>` : `<div class="info-note">Transport data coming soon for this destination.</div>`;
 
@@ -89,7 +90,7 @@ function renderPage(data) {
                 <p class="dest-desc">${money(h.price_range_min)} – ${money(h.price_range_max)} / night
                   ${h.free_breakfast ? ' · 🍳 Free breakfast' : ''}${h.swimming_pool ? ' · 🏊 Pool' : ''}</p>
                 <div class="dest-meta"><span>📍 ${escapeHtml(h.address)}</span></div>
-                <a href="/hotel_booking.php?hotel=${h.hotel_id}" class="btn btn-primary btn-block btn-sm">Book this hotel</a>
+                <a href="/explore-bangladesh-main/hotel_booking.php?hotel=${h.hotel_id}" class="btn btn-primary btn-block btn-sm">Book this hotel</a>
               </div>
             </div>`).join('')}
         </div>
@@ -142,7 +143,7 @@ function renderPage(data) {
       </div>
       <div id="reviewMsg"></div>
       <button type="submit" class="btn btn-primary btn-block">Submit review</button>
-    </form>` : `<div class="info-note">Please <a href="/login.php">log in</a> to leave a review or rating.</div>`;
+    </form>` : `<div class="info-note">Please <a href="/explore-bangladesh-main/login.php">log in</a> to leave a review or rating.</div>`;
 
   document.getElementById('pageContent').innerHTML = `
     <section class="hero" style="padding-bottom:0;">
@@ -154,7 +155,7 @@ function renderPage(data) {
           <button class="btn btn-primary fav-btn-hero" data-dest-id="${d.destination_id}">
             <span class="fav-icon">🤍</span> Save to favourites
           </button>
-          <a href="/shared_rides.php?destination=${d.destination_id}" class="btn btn-outline-light">🚗 Share a ride</a>
+          <a href="/explore-bangladesh-main/shared_rides.php?destination=${d.destination_id}" class="btn btn-outline-light">🚗 Share a ride</a>
           ${d.map_link ? `<a href="${escapeHtml(d.map_link)}" target="_blank" class="btn btn-outline-light">Open in Maps</a>` : ''}
         </div>
       </div>
@@ -208,7 +209,7 @@ function renderPage(data) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
-      const res = await apiPost('/api/review_add.php', {
+      const res = await apiPost('/explore-bangladesh-main/api/review_add.php', {
         destination_id: destId,
         stars: fd.get('stars'),
         review_text: fd.get('review_text'),
@@ -228,7 +229,7 @@ function renderPage(data) {
 
 async function loadDestination() {
   if (!destId) { renderNotFound(); return; }
-  const data = await apiGet('/api/destination_detail.php?id=' + encodeURIComponent(destId));
+  const data = await apiGet('/explore-bangladesh-main/api/destination_detail.php?id=' + encodeURIComponent(destId));
   if (data.error) { renderNotFound(); return; }
   renderPage(data);
 }
