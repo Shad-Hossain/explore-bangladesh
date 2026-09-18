@@ -5,7 +5,7 @@ $pageTitle = 'Admin Login';
 $error = '';
 
 if (!empty($_SESSION['admin_id'])) {
-    header('Location: /explore-bangladesh-main/admin/dashboard.php');
+    header('Location: /admin/dashboard.php');
     exit;
 }
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin_id'] = $admin['admin_id'];
         $_SESSION['admin_username'] = $admin['username'];
-        header('Location: /explore-bangladesh-main/admin/dashboard.php');
+        header('Location: /admin/dashboard.php');
         exit;
     }
     $error = 'Invalid admin credentials.';
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Login — COMPASS</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
+<link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body style="background:var(--forest-dark); min-height:100vh; display:flex; align-items:center; justify-content:center;">
   <div style="width:100%; max-width:380px; background:#fff; border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-soft);">

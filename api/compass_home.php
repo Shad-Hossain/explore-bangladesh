@@ -88,14 +88,14 @@ foreach ($pdo->query("SELECT h.hotel_id id, h.hotel_name name, h.rating, h.hotel
                       FROM hotels h JOIN destinations d ON d.destination_id = h.destination_id
                       WHERE h.rating > 0 ORDER BY h.rating DESC LIMIT 4") as $r) {
     $highestRated[] = ['kind' => 'hotel', 'name' => $r['name'], 'rating' => (float) $r['rating'],
-        'meta' => $r['type'] . ' · ' . $r['dest_name'], 'link' => '/explore-bangladesh-main/hotel_booking.php?hotel=' . (int) $r['id'],
+        'meta' => $r['type'] . ' · ' . $r['dest_name'], 'link' => '/hotel_booking.php?hotel=' . (int) $r['id'],
         'price_hint' => true];
 }
 foreach ($pdo->query("SELECT r.restaurant_id id, r.restaurant_name name, r.rating, r.destination_id, d.name dest_name
                       FROM restaurants r JOIN destinations d ON d.destination_id = r.destination_id
                       WHERE r.rating > 0 ORDER BY r.rating DESC LIMIT 4") as $r) {
     $highestRated[] = ['kind' => 'food', 'name' => $r['name'], 'rating' => (float) $r['rating'],
-        'meta' => 'Restaurant · ' . $r['dest_name'], 'link' => '/explore-bangladesh-main/destination_details.php?id=' . (int) $r['destination_id'],
+        'meta' => 'Restaurant · ' . $r['dest_name'], 'link' => '/destination_details.php?id=' . (int) $r['destination_id'],
         'price_hint' => false];
 }
 usort($highestRated, fn($a, $b) => $b['rating'] <=> $a['rating']);
@@ -129,16 +129,16 @@ $heritage = array_slice($heritage, 0, 6);
 $partners = [];
 foreach ($pdo->query("SELECT hotel_id id, hotel_name name, hotel_type type, rating, destination_id FROM hotels WHERE rating > 0 ORDER BY rating DESC LIMIT 3") as $r) {
     $partners[] = ['kind' => '🏨', 'name' => $r['name'], 'meta' => $r['type'] . ' · ⭐ ' . number_format((float) $r['rating'], 1),
-        'link' => '/explore-bangladesh-main/hotel_booking.php?hotel=' . (int) $r['id']];
+        'link' => '/hotel_booking.php?hotel=' . (int) $r['id']];
 }
 foreach ($pdo->query("SELECT restaurant_id id, restaurant_name name, rating, destination_id FROM restaurants WHERE rating > 0 ORDER BY rating DESC LIMIT 3") as $r) {
     $partners[] = ['kind' => '🍽️', 'name' => $r['name'], 'meta' => 'Restaurant · ⭐ ' . number_format((float) $r['rating'], 1),
-        'link' => '/explore-bangladesh-main/destination_details.php?id=' . (int) $r['destination_id']];
+        'link' => '/destination_details.php?id=' . (int) $r['destination_id']];
 }
 foreach ($pdo->query("SELECT transport_id id, transport_type type, operator_name name FROM transport ORDER BY operator_name ASC LIMIT 4") as $r) {
     $icons = ['Bus' => '🚌', 'Train' => '🚆', 'Flight' => '✈️', 'Launch' => '🚢'];
     $partners[] = ['kind' => $icons[$r['type']] ?? '🚌', 'name' => $r['name'], 'meta' => $r['type'] . ' operator',
-        'link' => '/explore-bangladesh-main/ticket_booking.php'];
+        'link' => '/ticket_booking.php'];
 }
 $partners = array_slice($partners, 0, 8);
 

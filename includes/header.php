@@ -20,7 +20,7 @@ if (empty($pageTitle)) $pageTitle = 'Explore Bangladesh';
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
+<link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body>
 <?php include __DIR__ . '/header.html'; ?>
