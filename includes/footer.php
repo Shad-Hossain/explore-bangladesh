@@ -1,3 +1,4 @@
+<script src="/js/weatherplanner.js"></script>
 <?php include __DIR__ . '/footer.html'; ?>
 </main>
 <script src="/js/util.js"></script>

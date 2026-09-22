@@ -143,5 +143,5 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
-
+<script src="/js/weatherplanner.js"></script>
 <?php include __DIR__ . '/includes/footer.php'; ?>

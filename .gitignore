@@ -1,5 +1,5 @@
 # --- Secrets / local config (never commit) ---
-config/weather_api_key.php
+config/weather-api-key.php
 .env
 .env.*
 
