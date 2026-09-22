@@ -1,20 +1,33 @@
 <?php
 /**
- * Weather integration — OpenWeatherMap (free tier)
- * Get a free API key at: https://openweathermap.org/api
+ * Weather integration — Open-Meteo (https://open-meteo.com)
+ * Free, no API key required. See: https://open-meteo.com/en/docs
  *
- * This file wraps the "5 day / 3 hour forecast" endpoint, converts
- * it into a simple daily summary, scores each day for "how good is
- * this weather for tourism", and caches results in weather_logs so
- * the free-tier rate limit (60 calls/min, 1,000,000 calls/month)
- * is not hit on every page view.
+ * This file wraps the daily forecast endpoint, converts it into simple
+ * daily summaries, scores each day for "how good is this weather for
+ * tourism", and caches results in weather_logs so the upstream API is
+ * not hit on every page view.
  */
-
-require_once __DIR__ . '/weather-api-key.php';
-define('OPENWEATHER_BASE_URL', 'https://api.openweathermap.org/data/2.5/forecast');
 
 // How often cached forecasts are allowed to go stale before we refetch.
 define('WEATHER_REFRESH_HOURS', 5);
+
+/** Maps Open-Meteo WMO weather codes to a small set of display conditions. */
+function mapWeatherCondition(int $code): string
+{
+    return match ($code) {
+        0, 1                => 'Clear',
+        2, 3                => 'Clouds',
+        45, 48              => 'Fog',
+        51, 53, 55, 56, 57  => 'Drizzle',
+        61, 63, 65, 66, 67  => 'Rain',
+        71, 73, 75, 77      => 'Snow',
+        80, 81, 82, 84      => 'Rain',
+        85, 86              => 'Snow',
+        95, 96, 99          => 'Thunderstorm',
+        default             => 'Clouds',
+    };
+}
 
 /**
  * Fetch + cache a 5-day forecast summary for one destination.
@@ -29,53 +42,36 @@ function getForecastForDestination(PDO $pdo, int $destinationId, float $lat, flo
         return $cached;
     }
 
-    // 2. Call OpenWeatherMap
-    $url = OPENWEATHER_BASE_URL . '?' . http_build_query([
-        'lat'   => $lat,
-        'lon'   => $lon,
-        'appid' => OPENWEATHER_API_KEY,
-        'units' => 'metric',
+    // 2. Call Open-Meteo (no API key required)
+    $url = 'https://api.open-meteo.com/v1/forecast?' . http_build_query([
+        'latitude'                  => $lat,
+        'longitude'                 => $lon,
+        'daily'                     => 'temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,weather_code',
+        'forecast_days'             => 5,
+        'timezone'                  => 'auto',
+        'precipitation_probability' => 1,
     ]);
 
     $raw = @file_get_contents($url);
     if ($raw === false) {
-        // API unreachable / no key set yet — fall back to cache (may be empty)
+        // API unreachable — fall back to cache (may be empty)
         return $cached;
     }
 
     $data = json_decode($raw, true);
-    if (!isset($data['list'])) {
+    if (!isset($data['daily']['time'])) {
         return $cached;
     }
 
-    // 3. Group the 3-hour blocks into daily summaries
-    $daily = [];
-    foreach ($data['list'] as $slot) {
-        $date = substr($slot['dt_txt'], 0, 10);
-        if (!isset($daily[$date])) {
-            $daily[$date] = [
-                'temps' => [],
-                'pop'   => [],   // probability of precipitation
-                'wind'  => [],
-                'conditions' => [],
-            ];
-        }
-        $daily[$date]['temps'][]      = $slot['main']['temp'];
-        $daily[$date]['pop'][]        = $slot['pop'] ?? 0;
-        $daily[$date]['wind'][]       = $slot['wind']['speed'] ?? 0;
-        $daily[$date]['conditions'][] = $slot['weather'][0]['main'] ?? 'Clear';
-    }
-
-    // 4. Build summary + weather score, then cache
+    // 3. Build daily summaries (arrays are parallel by index)
+    $daily = $data['daily'];
     $result = [];
-    foreach ($daily as $date => $d) {
-        $tempMin = round(min($d['temps']), 1);
-        $tempMax = round(max($d['temps']), 1);
-        $rainProb = round((array_sum($d['pop']) / count($d['pop'])) * 100, 1);
-        $windAvg = round(array_sum($d['wind']) / count($d['wind']), 1);
-        $mainCondition = array_count_values($d['conditions']);
-        arsort($mainCondition);
-        $condition = array_key_first($mainCondition);
+    foreach ($daily['time'] as $i => $date) {
+        $condition = mapWeatherCondition((int) ($daily['weather_code'][$i] ?? 0));
+        $tempMin   = (float) ($daily['temperature_2m_min'][$i] ?? 0);
+        $tempMax   = (float) ($daily['temperature_2m_max'][$i] ?? 0);
+        $rainProb  = (float) ($daily['precipitation_probability_max'][$i] ?? 0);
+        $windAvg   = (float) ($daily['wind_speed_10m_max'][$i] ?? 0);
 
         $score = calculateWeatherScore($condition, $rainProb, $windAvg, $tempMax);
 
