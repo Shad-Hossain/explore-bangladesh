@@ -10,7 +10,7 @@
  * is not hit on every page view.
  */
 
-require_once __DIR__ . '/weather_api_key.php';
+require_once __DIR__ . '/weather-api-key.php';
 define('OPENWEATHER_BASE_URL', 'https://api.openweathermap.org/data/2.5/forecast');
 
 // How often cached forecasts are allowed to go stale before we refetch.

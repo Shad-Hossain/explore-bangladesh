@@ -254,18 +254,33 @@
 <script>
 const BASE = '/';
 const IMG_MAP = {
-  1: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
-  2: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
-  3: 'https://images.unsplash.com/photo-1577083288073-40892c6f211e',
+  1: '/images/Nilgiri bandarban.jpg',   
+  2: "/images/cox's bajar.jpg",         
+  3: '/images/paharpur.jpeg',          
 };
+
+const DEST_IMG_MAP = {
+  'Nilgiri': '/images/Nilgiri bandarban.jpg',
+  "Cox's Bazar Beach": "/images/cox's bajar.jpg",
+  'Saint Martin Island': '/images/saint martin.jpg',
+  'Kuakata Sea Beach': '/images/kuakata.jpg',
+  'Paharpur Buddhist Vihara': '/images/paharpur.jpeg',
+  'Shat Gombuj Mosque': '/images/shat gombuj mosque.jpg',
+};
+function destImage(d) {
+  return DEST_IMG_MAP[d.name] || IMG_MAP[d.category_id] || IMG_MAP[1];
+}
 const imgUrl = (base, w = 800) => base + '?auto=format&fit=crop&w=' + w + '&q=60';
+// If a hotlinked image ever dies , fall back
+// to the Mountain image instead of showing a broken-image icon on the card.
+const imgFallback = "this.onerror=null;this.src='" + imgUrl(IMG_MAP[1]) + "';";
 
 function destCardHtml(d) {
   const entry = d.entry_fee > 0 ? money(d.entry_fee) + ' entry' : 'Free entry';
   return `
     <article class="cs-card">
       <div class="cs-card-media">
-        <img src="${imgUrl(IMG_MAP[d.category_id] || IMG_MAP[1])}" alt="${escapeHtml(d.name)}" loading="lazy">
+        <img src="${imgUrl(destImage(d))}" alt="${escapeHtml(d.name)}" loading="lazy" onerror="${imgFallback}">
         <span class="cs-chip">${escapeHtml(d.category_name)}</span>
         <button class="fav-btn cs-fav" data-dest-id="${d.destination_id}" aria-label="Favourite">🤍</button>
       </div>
@@ -336,7 +351,7 @@ function renderWeather(data) {
   document.getElementById('weatherGrid').innerHTML = data.weather_picks.map(d => `
     <article class="cs-card">
       <div class="cs-card-media">
-        <img src="${imgUrl(IMG_MAP[d.category_id] || IMG_MAP[1])}" alt="${escapeHtml(d.name)}" loading="lazy">
+        <img src="${imgUrl(destImage(d))}" alt="${escapeHtml(d.name)}" loading="lazy" onerror="${imgFallback}">
         <span class="cs-chip" style="background:#dcfce7;color:#166534;">${escapeHtml(d.season_label)}</span>
       </div>
       <div class="cs-card-body">
@@ -370,7 +385,7 @@ function renderNearby(loc) {
   grid.innerHTML = sorted.map(d => `
     <article class="cs-card">
       <div class="cs-card-media">
-        <img src="${imgUrl(IMG_MAP[d.category_id] || IMG_MAP[1])}" alt="${escapeHtml(d.name)}" loading="lazy">
+        <img src="${imgUrl(destImage(d))}" alt="${escapeHtml(d.name)}" loading="lazy" onerror="${imgFallback}">
         <span class="cs-chip">${escapeHtml(d.category_name)}</span>
         <button class="fav-btn cs-fav" data-dest-id="${d.destination_id}" aria-label="Favourite">🤍</button>
       </div>
