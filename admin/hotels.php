@@ -9,7 +9,7 @@ $destinationsList = $pdo->query("SELECT destination_id, name FROM destinations O
 
 if (isset($_GET['delete'])) {
     $pdo->prepare("DELETE FROM hotels WHERE hotel_id = ?")->execute([(int) $_GET['delete']]);
-    header('Location: /admin/hotels.php');
+    header('Location: /explore-bangladesh-main/admin/hotels.php');
     exit;
 }
 
@@ -100,7 +100,7 @@ include __DIR__ . '/includes/header.php';
         <label style="display:flex; align-items:center; gap:6px; margin:0;"><input type="checkbox" name="swimming_pool" style="width:auto;" <?= !empty($editRow['swimming_pool']) ? 'checked' : '' ?>> Swimming pool</label>
       </div>
       <button type="submit" class="btn btn-primary btn-block"><?= $editRow ? 'Update hotel' : 'Add hotel' ?></button>
-      <?php if ($editRow): ?><a href="/admin/hotels.php" class="btn btn-ghost btn-block" style="margin-top:8px;">Cancel edit</a><?php endif; ?>
+      <?php if ($editRow): ?><a href="/explore-bangladesh-main/admin/hotels.php" class="btn btn-ghost btn-block" style="margin-top:8px;">Cancel edit</a><?php endif; ?>
     </form>
   </div>
 
@@ -115,8 +115,8 @@ include __DIR__ . '/includes/header.php';
           <td><?= htmlspecialchars($h['destination_name']) ?></td>
           <td>৳<?= number_format($h['price_range_min']) ?>–<?= number_format($h['price_range_max']) ?></td>
           <td>
-            <a href="/admin/hotels.php?edit=<?= $h['hotel_id'] ?>" class="btn btn-ghost btn-sm">Edit</a>
-            <a href="/admin/hotels.php?delete=<?= $h['hotel_id'] ?>" class="btn btn-ghost btn-sm" onclick="return confirm('Delete this hotel?')">Delete</a>
+            <a href="/explore-bangladesh-main/admin/hotels.php?edit=<?= $h['hotel_id'] ?>" class="btn btn-ghost btn-sm">Edit</a>
+            <a href="/explore-bangladesh-main/admin/hotels.php?delete=<?= $h['hotel_id'] ?>" class="btn btn-ghost btn-sm" onclick="return confirm('Delete this hotel?')">Delete</a>
           </td>
         </tr>
       <?php endforeach; ?>

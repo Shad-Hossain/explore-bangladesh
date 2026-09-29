@@ -10,7 +10,7 @@ $message = '';
 // Create a new ride
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_ride'])) {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: /explore-bangladesh-main/login.php');
         exit;
     }
     $destId = (int) $_POST['destination_id'];
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_ride'])) {
 // Tourist requests to join an existing ride (owner must accept/reject it — see below)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['join_ride'])) {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: /explore-bangladesh-main/login.php');
         exit;
     }
     $rideId = (int) $_POST['ride_id'];
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['join_ride'])) {
 // Ride owner accepts a join request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_request'])) {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: /explore-bangladesh-main/login.php');
         exit;
     }
     $rideId = (int) $_POST['ride_id'];
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_request'])) {
 // Ride owner rejects a join request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_request'])) {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: /explore-bangladesh-main/login.php');
         exit;
     }
     $rideId = (int) $_POST['ride_id'];
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reject_request'])) {
 // Ride owner cancels/deletes their own ride
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_ride'])) {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: /explore-bangladesh-main/login.php');
         exit;
     }
     $rideId = (int) $_POST['ride_id'];
@@ -278,7 +278,7 @@ include __DIR__ . '/includes/header.php';
       <div>
         <h3>Post a new ride</h3>
         <?php if (empty($_SESSION['user_id'])): ?>
-          <div class="info-note">Please <a href="/login.php">log in</a> to post a ride.</div>
+          <div class="info-note">Please <a href="/explore-bangladesh-main/login.php">log in</a> to post a ride.</div>
         <?php else: ?>
         <form method="post" class="weather-form">
           <input type="hidden" name="destination_id" value="<?= $destinationId ?>">

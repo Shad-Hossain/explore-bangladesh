@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — ' : '' ?>Admin — COMPASS</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=2">
+<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
 <style>
   body{background:var(--paper-dim);}
   .admin-shell{display:flex; min-height:100vh;}
@@ -22,12 +22,12 @@
     <div class="brand" style="color:#fff; margin-bottom:30px;">
       <span class="brand-mark">C</span> <span>COMPASS</span>
     </div>
-    <a href="/admin/dashboard.php">📊 Dashboard</a>
-    <a href="/admin/destinations.php">🗺️ Destinations</a>
-    <a href="/admin/hotels.php">🏨 Hotels</a>
-    <a href="/admin/reviews.php">⭐ Reviews</a>
-    <a href="/admin/bookings.php">🎟️ Bookings</a>
-    <a href="/index.php" style="margin-top:24px; border-top:1px solid rgba(255,255,255,.15); padding-top:16px;">← Back to site</a>
-    <a href="/admin/logout.php">Log out</a>
+    <a href="/explore-bangladesh-main/admin/dashboard.php">📊 Dashboard</a>
+    <a href="/explore-bangladesh-main/admin/destinations.php">🗺️ Destinations</a>
+    <a href="/explore-bangladesh-main/admin/hotels.php">🏨 Hotels</a>
+    <a href="/explore-bangladesh-main/admin/reviews.php">⭐ Reviews</a>
+    <a href="/explore-bangladesh-main/admin/bookings.php">🎟️ Bookings</a>
+    <a href="/explore-bangladesh-main/index.php" style="margin-top:24px; border-top:1px solid rgba(255,255,255,.15); padding-top:16px;">← Back to site</a>
+    <a href="/explore-bangladesh-main/admin/logout.php">Log out</a>
   </aside>
   <main class="admin-main">

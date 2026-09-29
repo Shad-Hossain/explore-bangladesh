@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     box.innerHTML = '<div class="info-note">Loading forecast…</div>';
 
     try {
-      let url = `/api/get_weather.php?destination_id=${encodeURIComponent(destId)}`;
+      let url = `/explore-bangladesh-main/api/get_weather.php?destination_id=${encodeURIComponent(destId)}`;
       if (travelDate) url += `&travel_date=${encodeURIComponent(travelDate)}`;
 
       const data = await apiGet(url);

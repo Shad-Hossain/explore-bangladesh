@@ -22,7 +22,7 @@ if ($hotel) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_booking'])) {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /login.php');
+        header('Location: /explore-bangladesh-main/login.php');
         exit;
     }
     $roomId = (int) $_POST['room_id'];
@@ -66,10 +66,10 @@ include __DIR__ . '/includes/header.php';
 
     <?php if ($success): ?>
       <div class="advice-box"><h4><?= htmlspecialchars($success) ?></h4>
-        <a href="/booking_history.php" class="btn btn-forest btn-sm" style="margin-top:10px;">View booking history</a>
+        <a href="/explore-bangladesh-main/booking_history.php" class="btn btn-forest btn-sm" style="margin-top:10px;">View booking history</a>
       </div>
     <?php elseif (!$hotel): ?>
-      <div class="info-note">Choose a hotel from the <a href="/hotels.php">hotels page</a> first.</div>
+      <div class="info-note">Choose a hotel from the <a href="/explore-bangladesh-main/hotels.php">hotels page</a> first.</div>
     <?php else: ?>
       <?php if ($error): ?><div class="advice-box warn"><?= htmlspecialchars($error) ?></div><?php endif; ?>
 

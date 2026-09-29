@@ -50,8 +50,8 @@ include __DIR__ . '/includes/header.php';
 <?php if ($message): ?><div class="advice-box"><?= htmlspecialchars($message) ?></div><?php endif; ?>
 
 <div class="filter-bar">
-  <a href="/admin/bookings.php?tab=tickets" class="filter-chip <?= $tab === 'tickets' ? 'active' : '' ?>">🎟️ Tickets (<?= count($tickets) ?>)</a>
-  <a href="/admin/bookings.php?tab=hotels" class="filter-chip <?= $tab === 'hotels' ? 'active' : '' ?>">🏨 Hotels (<?= count($hotelBookings) ?>)</a>
+  <a href="/explore-bangladesh-main/admin/bookings.php?tab=tickets" class="filter-chip <?= $tab === 'tickets' ? 'active' : '' ?>">🎟️ Tickets (<?= count($tickets) ?>)</a>
+  <a href="/explore-bangladesh-main/admin/bookings.php?tab=hotels" class="filter-chip <?= $tab === 'hotels' ? 'active' : '' ?>">🏨 Hotels (<?= count($hotelBookings) ?>)</a>
 </div>
 
 <?php if ($tab === 'tickets'): ?>
@@ -71,8 +71,8 @@ include __DIR__ . '/includes/header.php';
         <td><?= $t['weather_warning_shown'] ? '⚠️ Yes' : '—' ?></td>
         <td><?= htmlspecialchars($t['status']) ?></td>
         <td>
-          <?php if ($t['status'] !== 'Confirmed'): ?><a href="/admin/bookings.php?tab=tickets&id=<?= $t['ticket_booking_id'] ?>&ticket_status=Confirmed" class="btn btn-forest btn-sm">Confirm</a><?php endif; ?>
-          <?php if ($t['status'] !== 'Cancelled'): ?><a href="/admin/bookings.php?tab=tickets&id=<?= $t['ticket_booking_id'] ?>&ticket_status=Cancelled" class="btn btn-ghost btn-sm">Cancel</a><?php endif; ?>
+          <?php if ($t['status'] !== 'Confirmed'): ?><a href="/explore-bangladesh-main/admin/bookings.php?tab=tickets&id=<?= $t['ticket_booking_id'] ?>&ticket_status=Confirmed" class="btn btn-forest btn-sm">Confirm</a><?php endif; ?>
+          <?php if ($t['status'] !== 'Cancelled'): ?><a href="/explore-bangladesh-main/admin/bookings.php?tab=tickets&id=<?= $t['ticket_booking_id'] ?>&ticket_status=Cancelled" class="btn btn-ghost btn-sm">Cancel</a><?php endif; ?>
         </td>
       </tr>
     <?php endforeach; ?>
@@ -96,8 +96,8 @@ include __DIR__ . '/includes/header.php';
         <td>৳<?= number_format($h['total_price']) ?></td>
         <td><?= htmlspecialchars($h['status']) ?></td>
         <td>
-          <?php if ($h['status'] !== 'Confirmed'): ?><a href="/admin/bookings.php?tab=hotels&id=<?= $h['booking_id'] ?>&hotel_status=Confirmed" class="btn btn-forest btn-sm">Confirm</a><?php endif; ?>
-          <?php if ($h['status'] !== 'Cancelled'): ?><a href="/admin/bookings.php?tab=hotels&id=<?= $h['booking_id'] ?>&hotel_status=Cancelled" class="btn btn-ghost btn-sm">Cancel</a><?php endif; ?>
+          <?php if ($h['status'] !== 'Confirmed'): ?><a href="/explore-bangladesh-main/admin/bookings.php?tab=hotels&id=<?= $h['booking_id'] ?>&hotel_status=Confirmed" class="btn btn-forest btn-sm">Confirm</a><?php endif; ?>
+          <?php if ($h['status'] !== 'Cancelled'): ?><a href="/explore-bangladesh-main/admin/bookings.php?tab=hotels&id=<?= $h['booking_id'] ?>&hotel_status=Cancelled" class="btn btn-ghost btn-sm">Cancel</a><?php endif; ?>
         </td>
       </tr>
     <?php endforeach; ?>

@@ -59,8 +59,8 @@ include __DIR__ . '/includes/header.php';
           <div class="dest-loc">📍 <?= htmlspecialchars($h['destination_name']) ?> · ⭐ <?= number_format($h['rating'], 1) ?></div>
           <p class="dest-desc">৳<?= number_format($h['price_range_min']) ?> – ৳<?= number_format($h['price_range_max']) ?> / night
             <?= $h['free_breakfast'] ? ' · 🍳 Breakfast' : '' ?><?= $h['swimming_pool'] ? ' · 🏊 Pool' : '' ?></p>
-          <a href="/hotel_booking.php?hotel=<?= $h['hotel_id'] ?>" class="btn btn-primary btn-block btn-sm">Book this hotel</a>
-          <a href="/destination_details.php?id=<?= $h['destination_id'] ?>" class="btn btn-ghost btn-block btn-sm" style="margin-top:8px;">View destination</a>
+          <a href="/explore-bangladesh-main/hotel_booking.php?hotel=<?= $h['hotel_id'] ?>" class="btn btn-primary btn-block btn-sm">Book this hotel</a>
+          <a href="/explore-bangladesh-main/destination_details.php?id=<?= $h['destination_id'] ?>" class="btn btn-ghost btn-block btn-sm" style="margin-top:8px;">View destination</a>
         </div>
       </div>
       <?php endforeach; ?>

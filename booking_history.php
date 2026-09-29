@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 $pageTitle = 'Booking History';
 
 if (empty($_SESSION['user_id'])) {
-    header('Location: /login.php');
+    header('Location: /explore-bangladesh-main/login.php');
     exit;
 }
 $userId = $_SESSION['user_id'];
@@ -40,7 +40,7 @@ include __DIR__ . '/includes/header.php';
 
     <h3 style="margin-top:28px;">🎟️ Ticket bookings</h3>
     <?php if (empty($tickets)): ?>
-      <div class="info-note">No ticket bookings yet. <a href="/ticket_booking.php">Book one now →</a></div>
+      <div class="info-note">No ticket bookings yet. <a href="/explore-bangladesh-main/ticket_booking.php">Book one now →</a></div>
     <?php else: ?>
       <table class="data-table">
         <thead><tr><th>Route</th><th>Date</th><th>Seats</th><th>Total</th><th>Status</th></tr></thead>
@@ -60,7 +60,7 @@ include __DIR__ . '/includes/header.php';
 
     <h3 style="margin-top:36px;">🏨 Hotel bookings</h3>
     <?php if (empty($hotelBookings)): ?>
-      <div class="info-note">No hotel bookings yet. <a href="/hotels.php">Browse hotels →</a></div>
+      <div class="info-note">No hotel bookings yet. <a href="/explore-bangladesh-main/hotels.php">Browse hotels →</a></div>
     <?php else: ?>
       <table class="data-table">
         <thead><tr><th>Hotel</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Guests</th><th>Total</th><th>Status</th></tr></thead>

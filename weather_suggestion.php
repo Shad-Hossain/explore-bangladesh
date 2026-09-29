@@ -84,7 +84,7 @@ include __DIR__ . '/includes/header.php';
       <tbody>
         <?php foreach ($ranked as $r): ?>
         <tr>
-          <td><a href="/destination_details.php?id=<?= $r['destination_id'] ?>"><?= htmlspecialchars($r['name']) ?></a></td>
+          <td><a href="/explore-bangladesh-main/destination_details.php?id=<?= $r['destination_id'] ?>"><?= htmlspecialchars($r['name']) ?></a></td>
           <td><?= $r['icon'] ?> <?= htmlspecialchars($r['category_name']) ?></td>
           <td><?= htmlspecialchars($r['district_name']) ?></td>
           <td><?= htmlspecialchars($r['condition_main'] ?? '—') ?></td>
@@ -143,5 +143,5 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
-<script src="/js/weatherplanner.js"></script>
+<script src="/explore-bangladesh-main/js/weatherplanner.js"></script>
 <?php include __DIR__ . '/includes/footer.php'; ?>
