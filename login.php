@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/config/site.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/style.css?v=2">
 </head>
 <body>
 
@@ -34,26 +35,26 @@
       <div class="field"><label>Password</label><input type="password" name="password" required></div>
       <button type="submit" class="btn btn-primary btn-block">Log in</button>
     </form>
-    <p style="margin-top:16px; font-size:.9rem;">No account? <a href="/explore-bangladesh-main/register.php" style="color:var(--river-dark); font-weight:600;">Sign up</a></p>
+    <p style="margin-top:16px; font-size:.9rem;">No account? <a href="<?= BASE_URL ?>register.php" style="color:var(--river-dark); font-weight:600;">Sign up</a></p>
   </div>
 </section>
 
 <div id="site-footer"></div>
 
-<script src="/explore-bangladesh-main/js/util.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/api.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/layout.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/script.js?v=5"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/script.js?v=6"></script>
 <script>
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const fd = new FormData(e.target);
-  const res = await apiPost('/explore-bangladesh-main/api/login.php', {
+  const res = await apiPost('<?= BASE_URL ?>api/login.php', {
     email: fd.get('email'),
     password: fd.get('password'),
   });
   if (res.success) {
-    window.location.href = '/explore-bangladesh-main/index.php';
+    window.location.href = '<?= BASE_URL ?>index.php';
   } else {
     document.getElementById('formMsg').innerHTML =
       `<div class="advice-box warn">${escapeHtml(res.error || 'Invalid email or password.')}</div>`;

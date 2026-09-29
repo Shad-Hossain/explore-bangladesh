@@ -4,7 +4,7 @@ $pageTitle = 'Restaurant';
 
 $id = (int) ($_GET['id'] ?? 0);
 if ($id <= 0) {
-    header('Location: /explore-bangladesh-main/food.php');
+    header('Location: ' . BASE_URL . 'food.php');
     exit;
 }
 
@@ -18,7 +18,7 @@ $rest = $pdo->prepare(
 $rest->execute([$id]);
 $r = $rest->fetch();
 if (!$r) {
-    header('Location: /explore-bangladesh-main/food.php');
+    header('Location: ' . BASE_URL . 'food.php');
     exit;
 }
 $pageTitle = $r['restaurant_name'];
@@ -51,9 +51,9 @@ $menuItems = $menu->fetchAll();
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
-<link rel="stylesheet" href="/explore-bangladesh-main/css/home.css">
-<link rel="stylesheet" href="/explore-bangladesh-main/css/food.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/style.css?v=2">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/home.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/food.css">
 </head>
 <body>
 
@@ -61,7 +61,7 @@ $menuItems = $menu->fetchAll();
 
 <section class="cs-section">
   <div class="container" style="max-width:1100px;margin:0 auto;padding:0 20px;">
-    <a href="/explore-bangladesh-main/food.php" class="cs-viewall" style="display:inline-block;margin-bottom:18px;">← Back to Food &amp; Dining</a>
+    <a href="<?= BASE_URL ?>food.php" class="cs-viewall" style="display:inline-block;margin-bottom:18px;">← Back to Food &amp; Dining</a>
 
     <div class="rest-hero" style="display:grid; grid-template-columns:1fr 1.2fr; gap:26px; align-items:start;">
       <div class="rest-media" style="position:relative; border-radius:18px; overflow:hidden; box-shadow:var(--shadow-soft);">
@@ -121,11 +121,11 @@ $menuItems = $menu->fetchAll();
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
 
-<script src="/explore-bangladesh-main/js/util.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/api.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/layout.js"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
 <script>
-const BASE = '/explore-bangladesh-main/';
+const BASE = '<?= BASE_URL ?>';
 const REST_ID = <?= (int) $id ?>;
 
 function weatherIconCode(w) {

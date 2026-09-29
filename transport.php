@@ -22,9 +22,9 @@ $pageTitle = 'Transport';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
-<link rel="stylesheet" href="/explore-bangladesh-main/css/food.css">
-<link rel="stylesheet" href="/explore-bangladesh-main/css/transport.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/style.css?v=2">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/food.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/transport.css">
 </head>
 <body>
 
@@ -81,11 +81,11 @@ $pageTitle = 'Transport';
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
 
-<script src="/explore-bangladesh-main/js/util.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/api.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/layout.js"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
 <script>
-const BASE = '/explore-bangladesh-main/';
+const BASE = '<?= BASE_URL ?>';
 let ALL_DEPARTURES = [];
 let ALL_TYPES = [];
 let ALL_DESTS = [];

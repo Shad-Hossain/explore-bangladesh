@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/config/site.php';
 include "database.php";
 $id=intval($_GET['id'] ?? 0);
 $stmt=$conn->prepare("SELECT * FROM service_provider WHERE provider_id=? AND verification_status='Verified'");
@@ -22,6 +23,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 }
 ?>
 <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Book Service</title><link rel="stylesheet" href="style.css"></head>
-<body><nav class="navbar"><div class="container"><a class="logo" href="services.php">HeritageConnect</a><div><a href="/explore-bangladesh-main/index.php">← COMPASS</a></div></div></nav><main class="container"><div class="form-box"><h2>Book <?=htmlspecialchars($provider['name'])?></h2><p><b><?=htmlspecialchars($provider['service_type'])?></b> · <?=htmlspecialchars($provider['languages'])?></p><p>Price: <b><?=number_format($provider['price'],2)?> BDT</b></p>
+<body><nav class="navbar"><div class="container"><a class="logo" href="services.php">HeritageConnect</a><div><a href="<?= BASE_URL ?>index.php">← COMPASS</a></div></div></nav><main class="container"><div class="form-box"><h2>Book <?=htmlspecialchars($provider['name'])?></h2><p><b><?=htmlspecialchars($provider['service_type'])?></b> · <?=htmlspecialchars($provider['languages'])?></p><p>Price: <b><?=number_format($provider['price'],2)?> BDT</b></p>
 <?php if($message): ?><div class="notice"><?=htmlspecialchars($message)?></div><?php endif; ?>
 <form method="POST"><label>Your name</label><input name="customer_name" required><label>Your email</label><input type="email" name="customer_email" required><label>Booking date</label><input type="date" name="booking_date" min="<?=date('Y-m-d')?>" required><label>Start time</label><input type="time" name="start_time" required><button>Submit Booking</button> <a class="btn secondary" href="services.php">Back</a></form></div></main></body></html>

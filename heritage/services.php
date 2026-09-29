@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/config/site.php';
 include "database.php";
 $type = $_GET['type'] ?? '';
 $language = $_GET['language'] ?? '';
@@ -9,7 +10,7 @@ else { $stmt=$conn->prepare($sql); }
 $stmt->execute(); $providers=$stmt->get_result();
 ?>
 <!DOCTYPE html><html><head><meta charset="UTF-8"><title>Guides & Services</title><link rel="stylesheet" href="style.css"></head>
-<body><nav class="navbar"><div class="container"><a class="logo" href="index.php">HeritageConnect</a><div><a href="services.php">Guides & Services</a><a href="partners.php">Offers</a><a href="admin/login.php">Admin Login</a><a href="/explore-bangladesh-main/index.php">← COMPASS</a></div></div></nav>
+<body><nav class="navbar"><div class="container"><a class="logo" href="index.php">HeritageConnect</a><div><a href="services.php">Guides & Services</a><a href="partners.php">Offers</a><a href="admin/login.php">Admin Login</a><a href="<?= BASE_URL ?>index.php">← COMPASS</a></div></div></nav>
 <main class="container">
 <h1>Guides, Translators & Security Escorts</h1>
 <div class="notice">Only service providers verified by the admin appear here. Booking records are private to the admin.</div>

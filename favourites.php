@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/config/site.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/explore-bangladesh-main/css/style.css?v=2">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/style.css?v=2">
 </head>
 <body>
 
@@ -34,22 +35,22 @@
 
 <div id="site-footer"></div>
 
-<script src="/explore-bangladesh-main/js/util.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/api.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/layout.js?v=5"></script>
-<script src="/explore-bangladesh-main/js/script.js?v=5"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/script.js?v=6"></script>
 <script>
 async function loadFavourites() {
   const box = document.getElementById('favBox');
-  const data = await apiGet('/explore-bangladesh-main/api/favourites_list.php');
+  const data = await apiGet('<?= BASE_URL ?>api/favourites_list.php');
 
   if (data.status === 'login_required') {
-    window.location.href = '/explore-bangladesh-main/login.php';
+    window.location.href = '<?= BASE_URL ?>login.php';
     return;
   }
 
   if (!data.favourites.length) {
-    box.innerHTML = '<div class="info-note">You haven\'t saved anything yet. Browse <a href="/explore-bangladesh-main/destinations.php">destinations</a> and tap the heart icon.</div>';
+    box.innerHTML = '<div class="info-note">You haven\'t saved anything yet. Browse <a href="<?= BASE_URL ?>destinations.php">destinations</a> and tap the heart icon.</div>';
     return;
   }
 
@@ -63,7 +64,7 @@ async function loadFavourites() {
       <div class="dest-body">
         <h3>${escapeHtml(d.name)}</h3>
         <div class="dest-loc">📍 ${escapeHtml(d.district_name)}</div>
-        <a href="/explore-bangladesh-main/destination_details.php?id=${d.destination_id}" class="btn btn-forest btn-block btn-sm">View details</a>
+        <a href="<?= BASE_URL ?>destination_details.php?id=${d.destination_id}" class="btn btn-forest btn-block btn-sm">View details</a>
       </div>
     </div>`).join('')}</div>`;
 

@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/config/site.php';
 include "database.php";
 $providers = $conn->query("SELECT * FROM service_provider WHERE verification_status='Verified' ORDER BY provider_id DESC");
 $partners = $conn->query("SELECT * FROM partner WHERE status='Active' ORDER BY featured DESC, partner_name");
@@ -8,7 +9,7 @@ $ads = $conn->query("SELECT advertisement.*, partner.partner_name FROM advertise
 <body>
 <nav class="navbar"><div class="container"><a class="logo" href="index.php">HeritageConnect</a><div>
 <a href="services.php">Guides & Services</a><a href="partners.php">Offers</a><a href="admin/login.php">Admin</a>
-<a href="/explore-bangladesh-main/index.php">← COMPASS</a>
+<a href="<?= BASE_URL ?>index.php">← COMPASS</a>
 </div></div></nav>
 <section class="hero"><div class="container"><h1>HeritageConnect</h1><p>Explore heritage places and find trusted guides, translators, security escorts and tourism offers.</p></div></section>
 <main class="container">

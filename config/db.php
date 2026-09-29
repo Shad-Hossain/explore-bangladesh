@@ -4,6 +4,8 @@
  * COMPASS — Smart Tourism Management System
  */
 
+require_once __DIR__ . '/site.php';
+
 define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'explore_bangladesh');
 define('DB_USER', 'root');       // change for your local XAMPP/WAMP setup
