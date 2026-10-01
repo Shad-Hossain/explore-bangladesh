@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/config/site.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/css/style.css?v=2">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/style.css?v=2">
 </head>
 <body>
 
@@ -49,10 +50,10 @@
 
 <div id="site-footer"></div>
 
-<script src="/js/util.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/layout.js"></script>
-<script src="/js/script.js"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/script.js?v=6"></script>
 <script>
 function destCardHtml(d) {
   const entry = d.entry_fee > 0 ? money(d.entry_fee) + ' entry' : 'Free entry';
@@ -74,7 +75,7 @@ function destCardHtml(d) {
           <span>${entry}</span>
           ${weatherChip}
         </div>
-        <a href="/destination_details.php?id=${d.destination_id}" class="btn btn-forest btn-block btn-sm">View details</a>
+        <a href="<?= BASE_URL ?>destination_details.php?id=${d.destination_id}" class="btn btn-forest btn-block btn-sm">View details</a>
       </div>
     </div>`;
 }
@@ -88,7 +89,7 @@ function currentFilters() {
 }
 
 async function populateFilterOptions() {
-  const { categories, divisions } = await apiGet('/api/filters.php');
+  const { categories, divisions } = await apiGet('<?= BASE_URL ?>api/filters.php');
   const f = currentFilters();
 
   const catSel = document.getElementById('categorySelect');
@@ -120,7 +121,7 @@ async function loadResults() {
 
   const f = currentFilters();
   const params = new URLSearchParams({ q: f.q, category: f.category, division: f.division });
-  const data = await apiGet('/api/destinations_list.php?' + params.toString());
+  const data = await apiGet('<?= BASE_URL ?>api/destinations_list.php?' + params.toString());
 
   if (!data.destinations.length) {
     box.innerHTML = '<div class="info-note">No destinations match those filters yet. Try clearing a filter.</div>';

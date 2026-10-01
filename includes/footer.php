@@ -1,9 +1,10 @@
-<script src="/js/weatherplanner.js"></script>
-<?php include __DIR__ . '/footer.html'; ?>
+<?php require_once __DIR__ . '/../config/site.php'; ?>
+<script src="<?= BASE_URL ?>js/weatherplanner.js?v=6"></script>
+<?php echo str_replace('/explore-bangladesh-main/', BASE_URL, file_get_contents(__DIR__ . '/footer.html')); ?>
 </main>
-<script src="/js/util.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/layout.js"></script>
-<script src="/js/script.js"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/script.js?v=6"></script>
 </body>
 </html>

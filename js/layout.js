@@ -5,22 +5,26 @@
  *
  * Every page just needs:
  *   <div id="site-header"></div>  ...content...  <div id="site-footer"></div>
- *   <script src="/js/api.js"></script>
- *   <script src="/js/layout.js"></script>
+ *   <script src="js/api.js"></script>
+ *   <script src="js/layout.js"></script>
  */
 
 async function loadLayout() {
   const headerSlot = document.getElementById('site-header');
   const footerSlot = document.getElementById('site-footer');
 
-  const v = '?v=3';
+  const v = '?v=6';
+  // The static header/footer fragments still carry the old hard-coded prefix;
+  // rewrite it against the detected BASE_URL so the site runs under any folder.
+  const rebase = (html) => html.replace(/\/explore-bangladesh-main\//g, window.BASE_URL || '/');
+
   const [headerHtml, footerHtml] = await Promise.all([
-    fetch('/includes/header.html' + v).then(r => r.text()),
-    fetch('/includes/footer.html' + v).then(r => r.text()),
+    fetch(window.BASE_URL + 'includes/header.html' + v).then(r => r.text()),
+    fetch(window.BASE_URL + 'includes/footer.html' + v).then(r => r.text()),
   ]);
 
-  if (headerSlot) headerSlot.innerHTML = headerHtml;
-  if (footerSlot) footerSlot.innerHTML = footerHtml;
+  if (headerSlot) headerSlot.innerHTML = rebase(headerHtml);
+  if (footerSlot) footerSlot.innerHTML = rebase(footerHtml);
 
   highlightActiveNav();
   wireNavToggle();
@@ -85,7 +89,7 @@ async function paintAuthArea() {
 
   let session = { logged_in: false };
   try {
-    session = await apiGet('/api/session.php');
+    session = await apiGet(window.BASE_URL + 'api/session.php');
   } catch (e) { /* treat as logged out */ }
 
   document.querySelectorAll('[data-auth-only]').forEach(el => {
@@ -98,13 +102,13 @@ async function paintAuthArea() {
       <a href="#" id="logoutLink" class="btn btn-ghost">Log out</a>`;
     document.getElementById('logoutLink').addEventListener('click', async (e) => {
       e.preventDefault();
-      await apiPost('/api/logout.php', {});
-      window.location.href = '/index.php';
+      await apiPost(window.BASE_URL + 'api/logout.php', {});
+      window.location.href = window.BASE_URL + 'index.php';
     });
-  } else if (!slot.children.length) {
+  } else {
     slot.innerHTML = `
-      <a href="/login.php" class="btn btn-ghost">Log in</a>
-      <a href="/register.php" class="btn btn-primary">Sign up</a>`;
+      <a href="${window.BASE_URL}login.php" class="btn btn-ghost">Log in</a>
+      <a href="${window.BASE_URL}register.php" class="btn btn-primary">Sign up</a>`;
   }
 }
 

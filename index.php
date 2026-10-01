@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/config/site.php'; ?>
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
@@ -19,14 +20,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/css/style.css?v=2">
-<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/style.css?v=2">
+<link rel="stylesheet" href="<?= BASE_URL ?>css/home.css">
 </head>
 <body>
 
 <header class="cs-header">
   <div class="cs-header-inner">
-    <a href="/index.php" class="cs-brand">
+    <a href="<?= BASE_URL ?>index.php" class="cs-brand">
       <span class="cs-brand-mark">
         <svg viewBox="0 0 24 24" class="cs-brand-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.6 13.6 8.5 15.5 10.4 10.4" fill="currentColor" stroke="none"/></svg>
       </span>
@@ -34,14 +35,14 @@
     </a>
 
     <nav class="cs-nav" id="mainNav">
-      <a href="/index.php" data-nav="index.php">Home</a>
-      <a href="/destinations.php" data-nav="destinations.php">Explore</a>
-      <a href="/hotels.php" data-nav="hotels.php">Hotels</a>
-      <a href="/shared_rides.php" data-nav="shared_rides.php">Transport</a>
-      <a href="/weather_suggestion.php" data-nav="weather_suggestion.php">Food</a>
-      <a href="#" class="cs-soon" title="Coming soon">Trending</a>
-      <a href="#" class="cs-soon" title="Coming soon">Heritage &amp; Culture</a>
-      <a href="#" class="cs-soon" title="Coming soon">Guides &amp; Translators</a>
+      <a href="<?= BASE_URL ?>index.php" data-nav="index.php">Home</a>
+      <a href="<?= BASE_URL ?>destinations.php" data-nav="destinations.php">Explore</a>
+      <a href="<?= BASE_URL ?>hotels.php" data-nav="hotels.php">Hotels</a>
+      <a href="<?= BASE_URL ?>transport.php" data-nav="transport.php">Transport</a>
+      <a href="<?= BASE_URL ?>weather_suggestion.php" data-nav="weather_suggestion.php">Travel forecast</a>
+      <a href="<?= BASE_URL ?>food.php" data-nav="food.php">Food</a>
+      <a href="<?= BASE_URL ?>heritage/index.php">Heritage &amp; Culture</a>
+      <a href="<?= BASE_URL ?>heritage/services.php">Guides &amp; Translators</a>
     </nav>
 
     <div class="cs-header-actions" id="headerAuthArea">
@@ -49,8 +50,8 @@
         <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
       </button>
       <span id="authSlot">
-        <a href="/login.php" class="cs-signin">Sign in</a>
-        <a href="/register.php" class="cs-nav-cta">Join COMPASS</a>
+        <a href="<?= BASE_URL ?>login.php" class="cs-signin">Sign in</a>
+        <a href="<?= BASE_URL ?>register.php" class="cs-nav-cta">Join COMPASS</a>
       </span>
     </div>
 
@@ -87,8 +88,8 @@
     </form>
 
     <div class="cs-suggest">
-      <a href="/destinations.php" class="cs-suggest-pill">Bronze: Bandarban trail</a>
-      <a href="/destinations.php" class="cs-suggest-pill">2.5hrs: Sajek sunrise</a>
+      <a href="<?= BASE_URL ?>destinations.php" class="cs-suggest-pill">Bronze: Bandarban trail</a>
+      <a href="<?= BASE_URL ?>destinations.php" class="cs-suggest-pill">2.5hrs: Sajek sunrise</a>
     </div>
   </div>
 </section>
@@ -109,20 +110,9 @@
       <h2 class="cs-title">Popular destinations</h2>
       <p class="cs-sub">Most-visited stays and dining activity across the country.</p>
     </div>
-    <a href="/destinations.php" class="cs-viewall">View all →</a>
+    <a href="<?= BASE_URL ?>destinations.php" class="cs-viewall">View all →</a>
   </div>
   <div class="hm-grid cs-grid-4" id="popularGrid"></div>
-</section>
-
-<section class="cs-section">
-  <div class="cs-sec-head">
-    <div>
-      <span class="cs-eyebrow">Right now</span>
-      <h2 class="cs-title">Trending this month</h2>
-      <p class="cs-sub">Destinations freshest in their season right now.</p>
-    </div>
-  </div>
-  <div class="hm-grid cs-grid-4" id="trendingGrid"></div>
 </section>
 
 <section class="cs-section">
@@ -143,7 +133,7 @@
       <h2 class="cs-title">Recommended for current weather</h2>
       <p class="cs-sub">Based on each destination's best visiting season for this month.</p>
     </div>
-    <a href="/weather_suggestion.php" class="cs-viewall">Open weather planner →</a>
+    <a href="<?= BASE_URL ?>weather_suggestion.php" class="cs-viewall">Open weather planner →</a>
   </div>
   <div class="hm-grid cs-grid-4" id="weatherGrid"></div>
 </section>
@@ -171,8 +161,9 @@
   </div>
   <div class="cs-placeholder">
     <div style="font-size:2rem;">🏛️</div>
-    <b>Coming soon</b>
-    <p>Heritage &amp; culture is being built by another teammate — this section will appear here shortly.</p>
+    <b>Heritage experiences are here</b>
+    <p>Find time-tested heritage routes and trusted local guides — book a guided visit through the Heritage section.</p>
+    <a href="<?= BASE_URL ?>heritage/index.php" class="cs-btn cs-btn-primary">Explore heritage →</a>
   </div>
 </section>
 
@@ -210,7 +201,7 @@
       <span class="cs-eyebrow">About COMPASS</span>
       <h2>Know your weather before you go</h2>
       <p>COMPASS brings Bangladesh's destinations, hotels, transport routes and weather forecasts into one platform — so you can pick the right place at the right time.</p>
-      <a href="/weather_suggestion.php" class="cs-btn cs-btn-light">Open the weather planner →</a>
+      <a href="<?= BASE_URL ?>weather_suggestion.php" class="cs-btn cs-btn-light">Open the weather planner →</a>
     </div>
     <div class="cs-note">
       ⚠️ <strong>How it works:</strong> every destination has GPS coordinates linked to a live forecast. We score each day 0–100 for travel based on rain, storms and wind — and warn you before you book a ticket into bad weather.
@@ -226,46 +217,46 @@
     </div>
     <div>
       <h5>Explore</h5>
-      <a href="/destinations.php">Destinations</a>
-      <a href="/hotels.php">Hotels</a>
-      <a href="/shared_rides.php">Shared rides</a>
-      <a href="/ticket_booking.php">Book tickets</a>
+      <a href="<?= BASE_URL ?>destinations.php">Destinations</a>
+      <a href="<?= BASE_URL ?>hotels.php">Hotels</a>
+      <a href="<?= BASE_URL ?>shared_rides.php">Shared rides</a>
+      <a href="<?= BASE_URL ?>ticket_booking.php">Book tickets</a>
     </div>
     <div>
       <h5>Plan</h5>
-      <a href="/weather_suggestion.php">Weather planner</a>
-      <a href="/favourites.php">Favourites</a>
-      <a href="/booking_history.php">My bookings</a>
+      <a href="<?= BASE_URL ?>weather_suggestion.php">Weather planner</a>
+      <a href="<?= BASE_URL ?>favourites.php">Favourites</a>
+      <a href="<?= BASE_URL ?>booking_history.php">My bookings</a>
     </div>
     <div>
       <h5>Account</h5>
-      <a href="/login.php">Log in</a>
-      <a href="/register.php">Sign up</a>
-      <a href="/index.php#about">About</a>
+      <a href="<?= BASE_URL ?>login.php">Log in</a>
+      <a href="<?= BASE_URL ?>register.php">Sign up</a>
+      <a href="<?= BASE_URL ?>index.php#about">About</a>
     </div>
   </div>
   <div class="cs-footer-bottom" id="footerBottom">© COMPASS.</div>
 </footer>
 
-<script src="/js/util.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/layout.js"></script>
-<script src="/js/script.js"></script>
+<script src="<?= BASE_URL ?>js/util.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/api.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/layout.js?v=6"></script>
+<script src="<?= BASE_URL ?>js/script.js?v=6"></script>
 <script>
-const BASE = '/';
+const BASE = '<?= BASE_URL ?>';
 const IMG_MAP = {
-  1: '/images/Nilgiri bandarban.jpg',   
-  2: "/images/cox's bajar.jpg",         
-  3: '/images/paharpur.jpeg',          
+  1: '<?= BASE_URL ?>images/Nilgiri bandarban.jpg',   
+  2: "<?= BASE_URL ?>images/cox's bajar.jpg",         
+  3: '<?= BASE_URL ?>images/paharpur.jpeg',          
 };
 
 const DEST_IMG_MAP = {
-  'Nilgiri': '/images/Nilgiri bandarban.jpg',
-  "Cox's Bazar Beach": "/images/cox's bajar.jpg",
-  'Saint Martin Island': '/images/saint martin.jpg',
-  'Kuakata Sea Beach': '/images/kuakata.jpg',
-  'Paharpur Buddhist Vihara': '/images/paharpur.jpeg',
-  'Shat Gombuj Mosque': '/images/shat gombuj mosque.jpg',
+  'Nilgiri': '<?= BASE_URL ?>images/Nilgiri bandarban.jpg',
+  "Cox's Bazar Beach": "<?= BASE_URL ?>images/cox's bajar.jpg",
+  'Saint Martin Island': '<?= BASE_URL ?>images/saint martin.jpg',
+  'Kuakata Sea Beach': '<?= BASE_URL ?>images/kuakata.jpg',
+  'Paharpur Buddhist Vihara': '<?= BASE_URL ?>images/paharpur.jpeg',
+  'Shat Gombuj Mosque': '<?= BASE_URL ?>images/shat gombuj mosque.jpg',
 };
 function destImage(d) {
   return DEST_IMG_MAP[d.name] || IMG_MAP[d.category_id] || IMG_MAP[1];
@@ -406,7 +397,6 @@ async function renderHome() {
   renderStats(data);
 
   document.getElementById('popularGrid').innerHTML = data.popular.map(destCardHtml).join('');
-  document.getElementById('trendingGrid').innerHTML = data.trending.map(destCardHtml).join('');
   renderHighest(data);
   renderWeather(data);
   renderPartners(data);

@@ -18,7 +18,7 @@ foreach ($pdo->query("SELECT category_id, COUNT(*) c FROM destinations GROUP BY 
 foreach ($categories as &$cat) { $cat['count'] = $catCounts[$cat['category_id']] ?? 0; }
 unset($cat);
 
-// All destinations with their metadata (used by popular/trending/heritage/weather/nearby).
+// All destinations with their metadata (used by popular/heritage/weather/nearby).
 $dests = $pdo->query(
     "SELECT d.destination_id, d.name, d.description, d.entry_fee, d.best_time_to_visit,
             d.latitude, d.longitude, d.category_id, c.category_name, c.icon, dist.district_name, dist.division_id
@@ -49,7 +49,6 @@ $byActivity = function (array $list): array {
 // 1. Popular destinations — ordered by real on-site activity (stays + dining + services).
 $popular = array_slice($byActivity(array_values($dests)), 0, 6);
 
-// 2. Trending this month — in-season first, then on-site activity.
 $monthsMap = ['January'=>1,'February'=>2,'March'=>3,'April'=>4,'May'=>5,'June'=>6,'July'=>7,
     'August'=>8,'September'=>9,'October'=>10,'November'=>11,'December'=>12];
 $curMonth = (int) date('n');
@@ -73,35 +72,27 @@ function seasonScore(string $best, int $curMonth, array $monthsMap): array {
     }
     return [40, 'Mixed season'];
 }
-$trending = array_map(function ($d) use ($curMonth, $monthsMap) {
-    [$score, $label] = seasonScore((string) $d['best_time_to_visit'], $curMonth, $monthsMap);
-    $d['season_score'] = $score;
-    return $d;
-}, array_values($dests));
-usort($trending, fn($a, $b) =>
-    ($b['season_score'] <=> $a['season_score']) ?: ($b['activity'] <=> $a['activity']));
-$trending = array_slice($trending, 0, 6);
 
-// 3. Highest rated — hotels + restaurants carry ratings (ratings/reviews tables are empty).
+// 2. Highest rated — hotels + restaurants carry ratings (ratings/reviews tables are empty).
 $highestRated = [];
 foreach ($pdo->query("SELECT h.hotel_id id, h.hotel_name name, h.rating, h.hotel_type type, h.destination_id, d.name dest_name
                       FROM hotels h JOIN destinations d ON d.destination_id = h.destination_id
                       WHERE h.rating > 0 ORDER BY h.rating DESC LIMIT 4") as $r) {
     $highestRated[] = ['kind' => 'hotel', 'name' => $r['name'], 'rating' => (float) $r['rating'],
-        'meta' => $r['type'] . ' · ' . $r['dest_name'], 'link' => '/hotel_booking.php?hotel=' . (int) $r['id'],
+        'meta' => $r['type'] . ' · ' . $r['dest_name'], 'link' => BASE_URL . 'hotel_booking.php?hotel=' . (int) $r['id'],
         'price_hint' => true];
 }
 foreach ($pdo->query("SELECT r.restaurant_id id, r.restaurant_name name, r.rating, r.destination_id, d.name dest_name
                       FROM restaurants r JOIN destinations d ON d.destination_id = r.destination_id
                       WHERE r.rating > 0 ORDER BY r.rating DESC LIMIT 4") as $r) {
     $highestRated[] = ['kind' => 'food', 'name' => $r['name'], 'rating' => (float) $r['rating'],
-        'meta' => 'Restaurant · ' . $r['dest_name'], 'link' => '/destination_details.php?id=' . (int) $r['destination_id'],
+        'meta' => 'Restaurant · ' . $r['dest_name'], 'link' => BASE_URL . 'destination_details.php?id=' . (int) $r['destination_id'],
         'price_hint' => false];
 }
 usort($highestRated, fn($a, $b) => $b['rating'] <=> $a['rating']);
 $highestRated = array_slice($highestRated, 0, 6);
 
-// 4. Recommended for current weather — in-season destinations for this month.
+// 3. Recommended for current weather — in-season destinations for this month.
 $weatherPicks = [];
 foreach ($dests as $d) {
     [$score, $label] = seasonScore((string) $d['best_time_to_visit'], $curMonth, $monthsMap);
@@ -109,40 +100,38 @@ foreach ($dests as $d) {
 }
 usort($weatherPicks, fn($a, $b) => $b['season_score'] <=> $a['season_score']);
 $weatherPicks = array_slice($weatherPicks, 0, 6);
-if (file_exists(__DIR__ . '/../config/weather_api_key.php')) {
-    require_once __DIR__ . '/../config/weather_api_key.php';
-}
-$weatherKeySet = defined('OPENWEATHER_API_KEY') && trim((string) OPENWEATHER_API_KEY) !== '';
+$weatherReady = file_exists(__DIR__ . '/../config/weather_api.php');
+$weatherKeySet = true;
 
-// 5. Nearby destinations — coordinates returned so the page can sort by GPS distance.
+// 4. Nearby destinations — coordinates returned so the page can sort by GPS distance.
 $locations = array_map(fn($d) => [
     'destination_id' => (int) $d['destination_id'], 'name' => $d['name'],
     'latitude' => (float) $d['latitude'], 'longitude' => (float) $d['longitude'],
     'district_name' => $d['district_name'], 'icon' => $d['icon'],
 ], $dests);
 
-// 6. Heritage & culture — category 3.
+// 5. Heritage & culture — category 3.
 $heritage = array_values(array_filter($dests, fn($d) => (int) $d['category_id'] === 3));
 $heritage = array_slice($heritage, 0, 6);
 
-// 7. Featured partners — hotels, restaurants and transport operators.
+// 6. Featured partners — hotels, restaurants and transport operators.
 $partners = [];
 foreach ($pdo->query("SELECT hotel_id id, hotel_name name, hotel_type type, rating, destination_id FROM hotels WHERE rating > 0 ORDER BY rating DESC LIMIT 3") as $r) {
     $partners[] = ['kind' => '🏨', 'name' => $r['name'], 'meta' => $r['type'] . ' · ⭐ ' . number_format((float) $r['rating'], 1),
-        'link' => '/hotel_booking.php?hotel=' . (int) $r['id']];
+        'link' => BASE_URL . 'hotel_booking.php?hotel=' . (int) $r['id']];
 }
 foreach ($pdo->query("SELECT restaurant_id id, restaurant_name name, rating, destination_id FROM restaurants WHERE rating > 0 ORDER BY rating DESC LIMIT 3") as $r) {
     $partners[] = ['kind' => '🍽️', 'name' => $r['name'], 'meta' => 'Restaurant · ⭐ ' . number_format((float) $r['rating'], 1),
-        'link' => '/destination_details.php?id=' . (int) $r['destination_id']];
+        'link' => BASE_URL . 'destination_details.php?id=' . (int) $r['destination_id']];
 }
 foreach ($pdo->query("SELECT transport_id id, transport_type type, operator_name name FROM transport ORDER BY operator_name ASC LIMIT 4") as $r) {
     $icons = ['Bus' => '🚌', 'Train' => '🚆', 'Flight' => '✈️', 'Launch' => '🚢'];
     $partners[] = ['kind' => $icons[$r['type']] ?? '🚌', 'name' => $r['name'], 'meta' => $r['type'] . ' operator',
-        'link' => '/ticket_booking.php'];
+        'link' => BASE_URL . 'ticket_booking.php'];
 }
 $partners = array_slice($partners, 0, 8);
 
-// 8. Discount deals — reads optional `deals` table if the user created it.
+// 7. Discount deals — reads optional `deals` table if the user created it.
 $deals = [];
 try {
     $rows = $pdo->query(
@@ -175,7 +164,6 @@ json_out([
     'stats'             => ['destinations' => $totalDests, 'districts' => $totalDistricts],
     'categories'        => $categories,
     'popular'           => $popular,
-    'trending'          => $trending,
     'highest_rated'     => $highestRated,
     'weather_picks'     => $weatherPicks,
     'weather_key_set'   => $weatherKeySet,

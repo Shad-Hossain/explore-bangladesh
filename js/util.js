@@ -3,6 +3,21 @@
  * Client-side equivalent of the old includes/functions.php.
  */
 
+// Work out the app's web root from where this script is served, so it adapts
+// to any folder name. Result always has a leading and trailing slash
+// (e.g. "/explore-bangladesh-main/" or "/").
+window.BASE_URL = (function () {
+  var scripts = document.getElementsByTagName('script');
+  for (var i = 0; i < scripts.length; i++) {
+    var src = scripts[i].src;
+    if (src && /\/js\/util\.js($|\?)/.test(src)) {
+      var base = src.replace(/\?.*$/, '').replace(/\/js\/util\.js$/, '');
+      return /\/$/.test(base) ? base : base + '/';
+    }
+  }
+  return '/';
+})();
+
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
   return String(str)
